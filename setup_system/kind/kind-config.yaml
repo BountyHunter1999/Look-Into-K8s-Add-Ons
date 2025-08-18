@@ -1,0 +1,26 @@
+# Kind cluster configuration file
+# This defines a single-node Kubernetes cluster with port mappings for ingress
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+
+nodes:
+  # Define a control-plane node (master node)
+  - role: control-plane
+    # Port mappings to expose services from the cluster to the host machine
+    extraPortMappings:
+      # Map container port 80 to host port 80 for HTTP traffic
+      - containerPort: 80
+        hostPort: 80
+        protocol: TCP
+      # Map container port 443 to host port 443 for HTTPS traffic
+      - containerPort: 443
+        hostPort: 443
+        protocol: TCP
+
+    # Customize the kubeadm configuration for the node
+    kubeadmConfigPatches:
+      - |
+        kind: InitConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:
+            node-labels: "ingress-ready=true"
