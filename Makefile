@@ -18,3 +18,8 @@ access_argo:
 access_rancher:
 	kubectl port-forward service/rancher -n cattle-system 8082:443
 	echo "access rancher"
+
+
+#Install Kustomize
+install_kustomize:
+	GOBIN=$(pwd)/ GO111MODULE=on go install sigs.k8s.io/kustomize/kustomize/v5@latest

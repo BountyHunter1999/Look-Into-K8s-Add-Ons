@@ -2,7 +2,7 @@ const http = require("http");
 const PORT = process.env.PORT || 3000;
 
 const requestHandler = (request, response) => {
-  response.end("Hello World!");
+  response.end(`Hello World! This is my ${process.env.NODE_ENV} environment`);
 };
 
 const server = http.createServer(requestHandler);
