@@ -16,5 +16,5 @@ access_argo:
 	echo "access argo"
 
 access_rancher:
-	kubectl port-forward service/rancher -n cattle-system 8082:80
+	kubectl port-forward service/rancher -n cattle-system 8082:443
 	echo "access rancher"

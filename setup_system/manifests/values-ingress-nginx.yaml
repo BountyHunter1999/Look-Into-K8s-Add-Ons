@@ -1,0 +1,14 @@
+# Ingress NGINX Controller Configuration
+controller:
+  # Service configuration for the ingress controller
+  service:
+    # Set service type to NodePort to expose the service on each node's IP
+    type: NodePort
+  # HostPort configuration for direct node access
+  hostPort:
+    # Enable hostPort to bind the container port directly to the host
+    enabled: true
+  # Update strategy for handling pod updates
+  updateStrategy:
+    # Use Recreate strategy which terminates the old pod before creating a new one
+    type: Recreate
