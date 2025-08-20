@@ -45,6 +45,11 @@ kind: Kustomization
 resources:
   - ../../base
 
+secretGenerator:
+    - name: ${app_name}-env
+      literals:
+        - APP_ENV=${env}
+
 EOF
 done
 
