@@ -11,14 +11,19 @@ secretGenerator:
 
 namespace: node-app-stage
 
+images:
+  - name: node-app
+    newTag: latest
+
 patches:
   - target:
       kind: Deployment
       name: node-app-deploy
     patch: |-
       - op: add
-        path: /spec/template/spec/containers/0/env
+        path: /spec/template/spec/tolerations
         value:
-          - name: APP_ENV
+          - key: env
+            operator: Equal
             value: stage
-
+            effect: NoSchedule

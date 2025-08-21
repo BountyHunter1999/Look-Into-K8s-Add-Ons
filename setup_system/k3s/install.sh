@@ -68,7 +68,7 @@ if ask_install "ArgoCD" "GitOps continuous delivery tool for Kubernetes"; then
     
     echo "ArgoCD installed successfully!"
     # kubectl port-forward svc/argo-cd-argocd-server 8080:80 -n argocd & 
-    echo "Default admin password: $(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)" >> secrets/argocd.pw
+    echo "Default admin password: $(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)"
 else
     echo "Skipping ArgoCD installation."
 fi
@@ -97,7 +97,7 @@ if ask_install "Rancher" "Kubernetes management platform"; then
 
     echo "Rancher installed successfully!"
     echo "You can access Rancher at: https://rancher.nice.local"
-    echo "Default admin password: admin123" >> secrets/rancher.pw
+    echo "Default admin password: admin123"
 else
     echo "Skipping Rancher installation."
 fi

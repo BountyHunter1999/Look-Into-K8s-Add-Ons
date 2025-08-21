@@ -11,6 +11,10 @@ secretGenerator:
 
 namespace: node-app-dev
 
+images:
+  - name: node-app
+    newTag: latest
+
 patches:
   - target:
       kind: Deployment
@@ -23,4 +27,3 @@ patches:
             operator: Equal
             value: dev
             effect: NoSchedule
-

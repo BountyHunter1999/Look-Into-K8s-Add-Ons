@@ -50,10 +50,10 @@ secretGenerator:
       literals:
         - APP_ENV=${env}
 
-namespace: ${app_name}-${env}A
+namespace: ${app_name}-${env}
 
 images:
-  - name: nginx
+  - name: ${app_name}
     newTag: latest
 
 patches:
