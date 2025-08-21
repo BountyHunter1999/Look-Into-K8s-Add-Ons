@@ -29,9 +29,9 @@ if ! command -v k3d &> /dev/null; then
 fi
 
 # Create k3d cluster
-echo "Creating k3d cluster..."
+# echo "Creating k3d cluster..."
 # Expose 80/443 on the host for local ingress (Traefik is enabled by default in k3s)
-k3d cluster create mycluster
+# k3d cluster create mycluster
 
 # Prepare Helm repos (cert-manager)
 helm repo add jetstack https://charts.jetstack.io
@@ -68,7 +68,7 @@ if ask_install "ArgoCD" "GitOps continuous delivery tool for Kubernetes"; then
     
     echo "ArgoCD installed successfully!"
     # kubectl port-forward svc/argo-cd-argocd-server 8080:80 -n argocd & 
-    echo "Default admin password: $(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)"
+    echo "Default admin password: $(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)" >> secrets/argocd.pw
 else
     echo "Skipping ArgoCD installation."
 fi
@@ -97,7 +97,7 @@ if ask_install "Rancher" "Kubernetes management platform"; then
 
     echo "Rancher installed successfully!"
     echo "You can access Rancher at: https://rancher.nice.local"
-    echo "Default admin password: admin123"
+    echo "Default admin password: admin123" >> secrets/rancher.pw
 else
     echo "Skipping Rancher installation."
 fi

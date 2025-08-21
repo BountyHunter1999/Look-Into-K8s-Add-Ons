@@ -1,7 +1,7 @@
 apiVersion: k3d.io/v1alpha5
 kind: Simple
 metadata:
-  name: env-cluster
+  name: my-cluster
 
 servers: 1
 agents: 4   # central + dev + stage + prod
