@@ -50,6 +50,7 @@ secretGenerator:
       literals:
         - APP_ENV=${env}
 
+namespace: ${app_name}-${env}
 EOF
 done
 

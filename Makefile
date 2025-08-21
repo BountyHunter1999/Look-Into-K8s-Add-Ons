@@ -4,6 +4,15 @@ create_cluster:
 	kind delete cluster --name nice-cluster
 	kind create cluster --config setup_system/kind/kind-config.yaml
 
+setup_other_env:
+	k3d cluster delete dev || true
+	k3d cluster delete prod || true
+	k3d cluster delete stage || true
+	k3d cluster create dev
+	k3d cluster create prod
+	k3d cluster create stage
+	kubectl config use-context k3d-mycluster
+
 setup_with_k3d:
 	bash setup_system/k3s/install.sh
 
