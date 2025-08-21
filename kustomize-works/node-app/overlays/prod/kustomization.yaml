@@ -10,3 +10,15 @@ secretGenerator:
         - APP_ENV=prod
 
 namespace: node-app-prod
+
+patches:
+  - target:
+      kind: Deployment
+      name: node-app-deploy
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/env
+        value:
+          - name: APP_ENV
+            value: prod
+

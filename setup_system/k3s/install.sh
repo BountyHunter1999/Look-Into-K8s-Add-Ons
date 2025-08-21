@@ -85,7 +85,6 @@ if ask_install "Rancher" "Kubernetes management platform"; then
     helm upgrade --install rancher rancher-latest/rancher \
       --namespace cattle-system \
       --create-namespace \
-    #    -f setup_system/manifests/values-rancher-ingress.yaml \
       --set hostname=rancher.nice.local \
       --set replicas=1 \
       --set bootstrapPassword=admin123 \

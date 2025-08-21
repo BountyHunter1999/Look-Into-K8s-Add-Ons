@@ -51,6 +51,19 @@ secretGenerator:
         - APP_ENV=${env}
 
 namespace: ${app_name}-${env}
+
+patches:
+  - target:
+      kind: Deployment
+      name: ${app_name}-deploy
+    patch: |-
+      - op: add
+        path: /spec/template/spec/tolerations
+        value:
+          - key: env
+            operator: Equal
+            value: ${env}
+            effect: NoSchedule
 EOF
 done
 

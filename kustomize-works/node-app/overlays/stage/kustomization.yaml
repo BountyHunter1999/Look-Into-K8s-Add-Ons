@@ -10,3 +10,15 @@ secretGenerator:
         - APP_ENV=stage
 
 namespace: node-app-stage
+
+patches:
+  - target:
+      kind: Deployment
+      name: node-app-deploy
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/env
+        value:
+          - name: APP_ENV
+            value: stage
+

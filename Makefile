@@ -5,13 +5,16 @@ create_cluster:
 	kind create cluster --config setup_system/kind/kind-config.yaml
 
 setup_other_env:
-	k3d cluster delete dev || true
-	k3d cluster delete prod || true
-	k3d cluster delete stage || true
-	k3d cluster create dev
-	k3d cluster create prod
-	k3d cluster create stage
-	kubectl config use-context k3d-mycluster
+	k3d cluster create --config setup_system/k3s/k3d-config.yaml
+
+add_cluster_to_argocd: # kubectl config view -o jsonpath='{range .clusters[*]}{.name} -> {.cluster.server}{"\n"}{end}'
+	kubectl config set-cluster k3d-dev --server=https://k3d-dev-server-0:6443
+	kubectl config set-cluster k3d-prod --server=https://k3d-prod-server-0:6443
+	kubectl config set-cluster k3d-stage --server=https://k3d-stage-server-0:6443
+	kubectl config set-cluster k3d-mycluster --server=https://k3d-mycluster-server-0:6443
+	k3d cluster add dev
+	k3d cluster add prod
+	k3d cluster add stage
 
 setup_with_k3d:
 	bash setup_system/k3s/install.sh

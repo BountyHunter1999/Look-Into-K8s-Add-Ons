@@ -10,3 +10,17 @@ secretGenerator:
         - APP_ENV=dev
 
 namespace: node-app-dev
+
+patches:
+  - target:
+      kind: Deployment
+      name: node-app-deploy
+    patch: |-
+      - op: add
+        path: /spec/template/spec/tolerations
+        value:
+          - key: env
+            operator: Equal
+            value: dev
+            effect: NoSchedule
+

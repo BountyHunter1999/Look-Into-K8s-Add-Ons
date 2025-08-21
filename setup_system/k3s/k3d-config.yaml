@@ -1,0 +1,48 @@
+apiVersion: k3d.io/v1alpha5
+kind: Simple
+metadata:
+  name: env-cluster
+
+servers: 1
+agents: 4   # central + dev + stage + prod
+
+options:
+  k3s:
+    extraArgs:
+      # disable Traefik
+      - arg: "--disable=traefik"
+        nodeFilters:
+          - server:0
+
+      # central node (agent-0)
+      # kubectl taint nodes agent-0 role=infra:NoSchedule
+      - arg: "--node-taint=role=infra:NoSchedule"
+        nodeFilters:
+          - agent:0
+      - arg: "--node-label=role=infra"
+        nodeFilters:
+          - agent:0
+
+      # dev node (agent-1)
+      - arg: "--node-taint=env=dev:NoSchedule"
+        nodeFilters:
+          - agent:1
+      - arg: "--node-label=env=dev"
+        nodeFilters:
+          - agent:1
+
+      # stage node (agent-2)
+      - arg: "--node-taint=env=stage:NoSchedule"
+        nodeFilters:
+          - agent:2
+      - arg: "--node-label=env=stage"
+        nodeFilters:
+          - agent:2
+
+      # prod node (agent-3)
+      - arg: "--node-taint=env=prod:NoSchedule"
+        nodeFilters:
+          - agent:3
+      - arg: "--node-label=env=prod"
+        nodeFilters:
+          - agent:3
