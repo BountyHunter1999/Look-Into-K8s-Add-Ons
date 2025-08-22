@@ -12,13 +12,26 @@
 
 1. Go to Datacenter in the left tab
 2. Permissions ->
+   - Create Groups:
+   - Name: Provisioning
+   - Comment: Provison Servers
    - Create users:
      - Users ->
        - username: `local_terra`
        - First Name: `local`
        - Last Name: `terra`
        - Email: `local_terra@example.com`
+       - Groups: Provisioning
        - Comment: `Terraform user`
+   - Roles ->
+     - `pveum role add Provisioner -privs "Datastore.Allocate,Datastore.AllocateSpace,Datastore.AllocateTemplate,Datastore.Audit,SDN.Use,Sys.AccessNetwork,Sys.Audit,VM.Allocate,VM.Audit,VM.Backup,VM.Clone,VM.Config.CDROM,VM.Config.CPU,VM.Config.Cloudinit,VM.Config.Disk,VM.Config.HWType,VM.Config.Memory,VM.Config.Network,VM.Config.Options,VM.Console,VM.PowerMgmt"`
+     - `pveum role delete Provisioner` to delete the role
+     - `pveum role list Provisioner` to list the permisisons for the role
+   - Add -> Group Permissions:
+     - Path: /
+     - Group: Provisioning
+     - Role: Provisioner
+     - Propagate: Yes
    - Create API Tokens: API Tokens ->
      - User: Select the local terra user
      - Token ID: `local_terra_token`
