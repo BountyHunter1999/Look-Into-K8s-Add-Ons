@@ -11,3 +11,10 @@ commonLabels:
 
 commonAnnotations:
   description: "This is a test deployment"
+
+patches:
+  - target:
+      kind: Deployment
+    patch:
+      name: node-app-deploy
+

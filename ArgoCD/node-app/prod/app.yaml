@@ -1,0 +1,14 @@
+project: default
+source:
+  repoURL: https://github.com/BountyHunter1999/Look-Into-K8s-Add-Ons.git
+  path: kustomize-works/node-app/overlays/prod
+  targetRevision: HEAD
+destination:
+  server: https://kubernetes.default.svc
+  namespace: node-app-prod
+syncPolicy:
+  automated:
+    selfHeal: true
+    enabled: true
+  syncOptions:
+    - CreateNamespace=true
