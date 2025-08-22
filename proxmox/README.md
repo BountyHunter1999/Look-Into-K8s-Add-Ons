@@ -24,7 +24,7 @@
        - Groups: Provisioning
        - Comment: `Terraform user`
    - Roles ->
-     - `pveum role add Provisioner -privs "Datastore.Allocate,Datastore.AllocateSpace,Datastore.AllocateTemplate,Datastore.Audit,SDN.Use,Sys.AccessNetwork,Sys.Audit,VM.Allocate,VM.Audit,VM.Backup,VM.Clone,VM.Config.CDROM,VM.Config.CPU,VM.Config.Cloudinit,VM.Config.Disk,VM.Config.HWType,VM.Config.Memory,VM.Config.Network,VM.Config.Options,VM.Console,VM.PowerMgmt"`
+     - `pveum role add Provisioner -privs "Datastore.Allocate,Datastore.AllocateSpace,Datastore.AllocateTemplate,Datastore.Audit,SDN.Use,Sys.AccessNetwork,Sys.Audit,VM.Allocate,VM.Audit,VM.Backup,VM.Clone,VM.Config.CDROM,VM.Config.CPU,VM.Config.Cloudinit,VM.Config.Disk,VM.Config.HWType,VM.Config.Memory,VM.Config.Network,VM.Config.Options,VM.Console,VM.GuestAgent.Audit,VM.GuestAgent.FileRead,VM.GuestAgent.FileSystemMgmt,VM.GuestAgent.FileWrite,VM.PowerMgmt"`
      - `pveum role delete Provisioner` to delete the role
      - `pveum role list Provisioner` to list the permisisons for the role
    - Add -> Group Permissions:
@@ -37,3 +37,8 @@
      - Token ID: `local_terra_token`
      - Expire: Never (Make it something short)
      - Copy the secret key and save it somewhere safe
+
+## Destroy VMS
+
+- `echo "101,103,104,105" | awk -F',' '{for (i=1;i<=NF;i++) print $i}' | xargs -I{} qm stop {}`
+- `echo "101,103,104,105" | awk -F',' '{for (i=1;i<=NF;i++) print $i}' | xargs -I{} qm destroy {}`
