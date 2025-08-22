@@ -24,11 +24,11 @@ setup_with_kind:
 
 # Only for k3d
 access_argo:
-	kubectl port-forward service/argocd-server -n argocd 8081:443 
+	kubectl port-forward service/argocd-server -n argocd 8081:443 --address 0.0.0.0
 	echo "access argo"
 
 access_rancher:
-	kubectl port-forward service/rancher -n cattle-system 8082:443
+	kubectl port-forward service/rancher -n cattle-system 8082:443 --address 0.0.0.0
 	echo "access rancher"
 
 
