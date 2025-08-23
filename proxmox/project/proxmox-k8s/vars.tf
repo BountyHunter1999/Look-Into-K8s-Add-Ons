@@ -50,7 +50,7 @@ variable "vm_configs" {
       bridge      = "vmbr0",
       disk_size   = "60G",
       onboot      = true,
-      startup     = "order=any",
+      startup     = "order=1",
       network_tag = 301,
       ipconfig    = "ip=dhcp",
       ciuser      = "k8sUser"
@@ -66,7 +66,7 @@ variable "vm_configs" {
       bridge      = "vmbr0",
       disk_size   = "20G",
       onboot      = true,
-      startup     = "order=any",
+      startup     = "order=2",
       network_tag = 302,
       # ip route to find the gateway
       ipconfig   = "ip=192.168.0.203/24,gw=192.168.0.1",
@@ -83,7 +83,7 @@ variable "vm_configs" {
       bridge      = "vmbr0",
       disk_size   = "15G",
       onboot      = true,
-      startup     = "order=any",
+      startup     = "order=3",
       network_tag = 303,
       ipconfig    = "ip=dhcp",
       ciuser      = "k8sUser"
@@ -99,7 +99,7 @@ variable "vm_configs" {
       bridge      = "vmbr0",
       disk_size   = "15G",
       onboot      = true,
-      startup     = "order=any",
+      startup     = "order=4",
       network_tag = 304,
       ipconfig    = "ip=dhcp",
       ciuser      = "k8sUser"

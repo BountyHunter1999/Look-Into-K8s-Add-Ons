@@ -48,25 +48,35 @@ resource "proxmox_vm_qemu" "cloudinit-vms" {
   name        = each.value.name
   target_node = var.target_node
 
+  boot = "order=ide2;scsi0" # has to be the same as the OS disk of the template
+
   clone      = var.vm_template
   full_clone = true
   bios       = "ovmf"
   agent      = 1
   scsihw     = "virtio-scsi-single"
 
+
   os_type = "cloud-init"
   memory  = each.value.memory
 
   vm_state = each.value.vm_state
-  onboot   = each.value.onboot
-  startup  = each.value.startup
+  # Automatically reboot the VM if any of the modified parameters requires a reboot to take effect.
+  automatic_reboot = true
+  onboot           = each.value.onboot
+  startup          = each.value.startup
 
   # cloud init configuration
+  #https://github.com/Telmate/terraform-provider-proxmox/blob/master/docs/guides/cloud-init%20getting%20started.md
+  cicustom   = "vendor=local:snippets/qemu-guest-agent.yml" # /var/lib/vz/snippets/qemu-guest-agent.yml  cicustom = ""
   ipconfig0  = each.value.ipconfig
   skip_ipv6  = true
   ciuser     = each.value.ciuser
   cipassword = each.value.cipassword
+  ciupgrade  = true
   sshkeys    = each.value.sshkeys
+
+
 
   disks {
     scsi {
@@ -80,7 +90,7 @@ resource "proxmox_vm_qemu" "cloudinit-vms" {
     }
 
     ide {
-      ide0 {
+      ide2 {
         # Some images require a cloud-init disk on the IDE controller, others on the SCSI or SATA controller
         cloudinit {
           storage = "local-lvm"
