@@ -32,7 +32,7 @@ variable "vm_configs" {
     bridge      = string
     disk_size   = string
     onboot      = bool
-    startup     = bool
+    startup     = string
     network_tag = number
     ipconfig    = string
     ciuser      = string
@@ -50,7 +50,7 @@ variable "vm_configs" {
       bridge      = "vmbr0",
       disk_size   = "60G",
       onboot      = true,
-      startup     = true,
+      startup     = "order=any",
       network_tag = 301,
       ipconfig    = "ip=dhcp",
       ciuser      = "k8sUser"
@@ -66,12 +66,13 @@ variable "vm_configs" {
       bridge      = "vmbr0",
       disk_size   = "20G",
       onboot      = true,
-      startup     = true,
+      startup     = "order=any",
       network_tag = 302,
-      ipconfig    = "ip=dhcp",
-      ciuser      = "k8sUser"
-      cipassword  = "k8sUserpass"
-      sshkeys     = "some_public_key"
+      # ip route to find the gateway
+      ipconfig   = "ip=192.168.0.203/24,gw=192.168.0.1",
+      ciuser     = "k8sUser"
+      cipassword = "k8sUserpass"
+      sshkeys    = "some_public_key"
     },
     "dev" = {
       vm_id       = 303
@@ -82,7 +83,7 @@ variable "vm_configs" {
       bridge      = "vmbr0",
       disk_size   = "15G",
       onboot      = true,
-      startup     = true,
+      startup     = "order=any",
       network_tag = 303,
       ipconfig    = "ip=dhcp",
       ciuser      = "k8sUser"
@@ -98,7 +99,7 @@ variable "vm_configs" {
       bridge      = "vmbr0",
       disk_size   = "15G",
       onboot      = true,
-      startup     = true,
+      startup     = "order=any",
       network_tag = 304,
       ipconfig    = "ip=dhcp",
       ciuser      = "k8sUser"

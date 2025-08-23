@@ -5,6 +5,7 @@
 
 # Local .terraform directories
 .terraform/
+data/providers/
 
 # .tfstate files
 *.tfstate

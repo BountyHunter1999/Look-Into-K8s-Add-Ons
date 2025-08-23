@@ -81,8 +81,9 @@ resource "proxmox_vm_qemu" "cloudinit-vms" {
 
     ide {
       ide0 {
-        cdrom {
-          file = "cloudinit.iso"
+        # Some images require a cloud-init disk on the IDE controller, others on the SCSI or SATA controller
+        cloudinit {
+          storage = "local-lvm"
         }
       }
     }
