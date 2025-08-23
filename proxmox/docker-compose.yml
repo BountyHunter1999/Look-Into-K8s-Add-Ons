@@ -7,4 +7,4 @@ services:
     volumes:
       - ./:/config
       - ./data:/data
-    working_dir: /config/project/${TERRAFORM_ENV:-'proxmox-k8s'}
+    working_dir: /config/project/${TERRAFORM_ENV:-proxmox-k8s}
