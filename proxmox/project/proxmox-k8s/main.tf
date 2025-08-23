@@ -72,6 +72,7 @@ resource "proxmox_vm_qemu" "cloudinit-vms" {
   #https://github.com/Telmate/terraform-provider-proxmox/blob/master/docs/guides/cloud-init%20getting%20started.md
   # See logs at /var/log/cloud-init-output.log
   # qm cloudinit dump 301 network
+  # we can install or run other command using this
   cicustom = "vendor=local:snippets/qemu-guest-agent.yml" # /var/lib/vz/snippets/qemu-guest-agent.yml
   ipconfig0  = each.value.ipconfig
   skip_ipv6  = true
