@@ -6,3 +6,5 @@ apply:
 
 destroy:
 	./deploy.sh proxmox-k8s destroy
+
+fresh: destroy apply

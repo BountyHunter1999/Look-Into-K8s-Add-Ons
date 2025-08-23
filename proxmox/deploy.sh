@@ -42,7 +42,7 @@ terraform_destroy() {
 
     echo "Running terraform destroy for environment: $TERRAFORM_ENV"
     echo "WARNING: This will destroy all resources!"
-    $TF_CMD destroy
+    $TF_CMD destroy -auto-approve
 }
 
 # Function to get user input
