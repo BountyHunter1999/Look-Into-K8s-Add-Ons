@@ -48,11 +48,9 @@ resource "proxmox_vm_qemu" "cloudinit-vms" {
   name        = each.value.name
   target_node = var.target_node
 
-  boot = "order=scsi0;net0"
-
   # machine = "q35"
 
-  # boot = "order=ide2;scsi0" # has to be the same as the OS disk of the template
+  boot = "order=scsi0;net0" # has to be the same as the OS disk of the template
 
   clone      = var.vm_template
   full_clone = true
@@ -68,17 +66,19 @@ resource "proxmox_vm_qemu" "cloudinit-vms" {
   # Automatically reboot the VM if any of the modified parameters requires a reboot to take effect.
   automatic_reboot = true
   onboot           = each.value.onboot
-  # startup          = each.value.startup
+  startup          = each.value.startup
 
   # cloud init configuration
   #https://github.com/Telmate/terraform-provider-proxmox/blob/master/docs/guides/cloud-init%20getting%20started.md
-  # cicustom   = "vendor=local:snippets/qemu-guest-agent.yml" # /var/lib/vz/snippets/qemu-guest-agent.yml  cicustom = ""
+  # See logs at /var/log/cloud-init-output.log
+  # qm cloudinit dump 301 network
+  cicustom = "vendor=local:snippets/qemu-guest-agent.yml" # /var/lib/vz/snippets/qemu-guest-agent.yml
   ipconfig0  = each.value.ipconfig
   skip_ipv6  = true
   nameserver = "1.1.1.1 8.8.8.8"
   ciuser     = each.value.ciuser
   cipassword = each.value.cipassword
-  ciupgrade  = true
+  ciupgrade  = false
   sshkeys    = each.value.sshkeys
   # force_recreate_on_change_of = "cipassword"
 
@@ -86,8 +86,9 @@ resource "proxmox_vm_qemu" "cloudinit-vms" {
     scsi {
       scsi0 {
         disk {
-          size      = each.value.disk_size
-          storage   = "local-lvm"
+          size    = each.value.disk_size
+          storage = "local-lvm"
+          # discard   = "on" # if server uses a ssd
           replicate = true
         }
       }
@@ -97,7 +98,6 @@ resource "proxmox_vm_qemu" "cloudinit-vms" {
       ide0 {
         # Some images require a cloud-init disk on the IDE controller, others on the SCSI or SATA controller
         cloudinit {
-
           storage = "local-lvm"
         }
       }
@@ -105,11 +105,12 @@ resource "proxmox_vm_qemu" "cloudinit-vms" {
     }
   }
   network {
-    id       = 0
-    model    = "virtio"
-    bridge   = each.value.bridge
-    firewall = true
-    tag      = each.value.network_tag
+    id        = 0                 # NIC index in the VM (0 = first NIC)
+    model     = "virtio"          # NIC model (virtio is recommended for performance)
+    bridge    = each.value.bridge # Proxmox bridge to attach this NIC to
+    firewall  = true             # Enable Proxmox firewall for this NIC
+    link_down = false             # NIC is enabled by default
+    # tag     = each.value.network_tag  # Optional VLAN tag
   }
 
   cpu {
