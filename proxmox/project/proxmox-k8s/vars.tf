@@ -48,7 +48,7 @@ variable "vm_configs" {
       memory      = 8192,
       vm_state    = "running",
       bridge      = "vmbr0",
-      disk_size   = "60G",
+      disk_size   = "60G", # make sure to have more storage than the tempalte
       onboot      = true,
       startup     = "order=1",
       network_tag = 301,
@@ -97,7 +97,7 @@ variable "vm_configs" {
       memory      = 2048,
       vm_state    = "running",
       bridge      = "vmbr0",
-      disk_size   = "15G",
+      disk_size   = "15G", 
       onboot      = true,
       startup     = "order=4",
       network_tag = 304,
